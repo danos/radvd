@@ -1,0 +1,33 @@
+Source: radvd
+Section: net
+Priority: optional
+Maintainer: Vyatta Package Maintainers <DL-vyatta-help@att.com>
+Standards-Version: 3.9.8
+Build-Depends: dh-autoreconf, debhelper (>= 9), flex, bison,
+ pkg-config,
+ libdaemon-dev,
+ bvnos-linux-libc-dev,
+ check
+Homepage: http://www.litech.org/radvd/
+
+Package: radvd
+Architecture: any
+Depends: ${shlibs:Depends}, adduser, ${misc:Depends}, lsb-base (>= 3.0-6)
+Description: Router Advertisement Daemon
+ IPv6 has a lot more support for autoconfiguration than IPv4. But
+ for this autoconfiguration to work on the hosts of a network, the
+ routers of the local network have to run a program which answers
+ the autoconfiguration requests of the hosts.
+ .
+ On Linux this program is called radvd, which stands for Router
+ ADVertisement Daemon. This daemon listens to router solicitations (RS)
+ and answers with router advertisement (RA). Furthermore unsolicited
+ RAs are also sent from time to time.
+
+Package: radvd-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: radvd (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: radvd debug symbols
+ Debug symbols for radvd

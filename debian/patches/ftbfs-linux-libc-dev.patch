@@ -1,0 +1,20 @@
+Fix failure to build from source with linux-libc-dev 4.9.30-1
+
+From: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=864269
+
+Using net/if_arp.h looks like the right thing to do anyway according
+to the kernel maintainer:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=864233#20
+
+It also looks like it was happening anyway and linux/if_arp.h was
+ignored before being removed.
+--- a/configure.ac
++++ b/configure.ac
+@@ -163,7 +163,6 @@ AC_HEADER_STDC
+ AC_CHECK_HEADERS( \
+ 	getopt.h \
+ 	ifaddrs.h \
+-	linux/if_arp.h \
+ 	machine/limits.h \
+ 	machine/param.h \
+ 	net/if_arp.h \

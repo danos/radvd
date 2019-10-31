@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_LDFLAGS_MAINT_APPEND = -lcheck_pic
+export DEB_BUILD_OPTIONS=nocheck
+
+%:
+	dh $@ --with autoreconf
+
+#NN override_dh_auto_build:
+#NN     cp debian/copyright.in > COPYRIGHT
+## Not Now
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f gram.c gram.h scanner.c
+	rm -f privsep.c
+
+override_dh_install:
+	install -m 644 debian/simple-radvd.conf `pwd`/debian/radvd/usr/share/doc/radvd/examples/
+	install -m 644 radvd.conf.example `pwd`/debian/radvd/usr/share/doc/radvd/examples/
+	install -m 644 INTRO.html `pwd`/debian/radvd/usr/share/doc/radvd/
+
+override_dh_installinit:
+	dh_installinit --error-handler=true
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/radvd
+
+override_dh_strip:
+	dh_strip --dbg-package=radvd-dbg
